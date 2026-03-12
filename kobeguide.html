@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kobe — History, Nature & Culture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e1a24;
+    --wave: #d4e4ee;
+    --blue: #2a6080;
+    --steel: #4a7a99;
+    --deepblue: #1a3d52;
+    --pale: #f5f8fa;
+    --muted: #5a7a8a;
+    --warm: #dce8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--pale);
+    color: var(--ink);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #7ab8d8 0%, #a8d4ea 30%, #cce8f5 65%, #e8f6ff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 2rem;
+  }
+
+  .cover-img {
+    position: absolute; inset: 0;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Kobe_port_island_center.jpg/1280px-Kobe_port_island_center.jpg');
+    background-size: cover;
+    background-position: center 60%;
+    opacity: 0.25;
+    mix-blend-mode: multiply;
+  }
+
+  .cover-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(5rem, 18vw, 12rem);
+    color: var(--deepblue);
+    opacity: 0.08;
+    position: absolute;
+    right: 5%; top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.2em;
+    user-select: none;
+  }
+
+  .cover-content { position: relative; text-align: center; }
+
+  .cover-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--deepblue);
+    margin-bottom: 1.5rem;
+    opacity: 0.65;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 9vw, 5.5rem);
+    color: var(--deepblue);
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    color: var(--blue);
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+  }
+
+  .cover-location {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--deepblue);
+    border-top: 1px solid rgba(26,61,82,0.2);
+    padding-top: 1.2rem;
+    opacity: 0.6;
+  }
+
+  .dedication {
+    position: absolute;
+    bottom: 5rem; left: 0; right: 0;
+    text-align: center;
+  }
+
+  .dedication-inner {
+    display: inline-block;
+    border: 1px solid rgba(26,61,82,0.25);
+    padding: 1.1rem 2.4rem;
+    position: relative;
+  }
+
+  .dedication-inner::before,
+  .dedication-inner::after {
+    content: '✦';
+    position: absolute;
+    color: var(--steel);
+    font-size: 0.6rem;
+    opacity: 0.7;
+  }
+  .dedication-inner::before { top: -0.45rem; left: -0.45rem; }
+  .dedication-inner::after  { bottom: -0.45rem; right: -0.45rem; }
+
+  .dedication-for {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--deepblue);
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .dedication-names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 4vw, 1.7rem);
+    color: var(--steel);
+  }
+
+  .dedication-names .amp { opacity: 0.5; margin: 0 0.3em; }
+
+  .dedication-date {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--deepblue);
+    opacity: 0.5;
+    margin-top: 0.6rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    color: var(--deepblue);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bob 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px; height: 32px;
+    background: var(--steel);
+    margin: 0.6rem auto 0;
+    opacity: 0.5;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* TOC */
+  .toc {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    border-bottom: 1px solid var(--wave);
+  }
+
+  .toc-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .toc-item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--wave);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s;
+  }
+  .toc-item:hover { padding-left: 0.5rem; }
+
+  .toc-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--wave);
+  }
+
+  .toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--deepblue);
+  }
+
+  .toc-sub { font-size: 0.75rem; color: var(--muted); font-style: italic; }
+  .toc-arrow { color: var(--wave); font-size: 0.85rem; }
+
+  /* SECTIONS */
+  section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+  }
+  section + section { border-top: 1px solid var(--wave); }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 4rem;
+    color: var(--wave);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: var(--deepblue);
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+  }
+
+  p { font-size: 1rem; color: #2a3a44; margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* TIMELINE */
+  .timeline { margin: 1.8rem 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--wave);
+    font-size: 0.9rem;
+    color: #2a3a44;
+  }
+
+  .tl-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* HIGHLIGHT */
+  .highlight {
+    background: var(--warm);
+    color: var(--deepblue);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    border-left: 4px solid var(--steel);
+  }
+
+  .highlight::before {
+    content: attr(data-kanji);
+    font-family: 'Shippori Mincho', serif;
+    position: absolute;
+    right: -0.5rem; bottom: -1rem;
+    font-size: 7rem;
+    color: rgba(26,61,82,0.08);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .highlight-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--deepblue);
+    margin-bottom: 0.8rem;
+  }
+
+  .highlight p { font-size: 0.92rem; margin-bottom: 0.6rem; }
+
+  .big-word {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.2rem;
+    color: var(--blue);
+    display: block;
+    margin: 0.8rem 0 0.4rem;
+  }
+
+  /* GEO DIAGRAM */
+  .geo-diagram {
+    margin: 1.8rem 0;
+    border: 1px solid var(--wave);
+    overflow: hidden;
+  }
+
+  .geo-layer {
+    padding: 0.55rem 1rem;
+    font-size: 0.83rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .geo-layer.sky   { background: #d4eaf8; color: #1a5a80; }
+  .geo-layer.rock  { background: #d8d4c8; color: #3a3228; }
+  .geo-layer.fault { background: #e8d4d4; color: #5a2020; border-left: 3px solid #a04040; }
+  .geo-layer.water { background: #c8dce8; color: #1a3a52; }
+  .geo-layer.sea   { background: #a8c8dc; color: #0e2030; }
+
+  .geo-note { font-size: 0.72rem; opacity: 0.7; font-style: italic; }
+
+  /* ROPEWAY NOTE */
+  .ropeway-note {
+    background: var(--warm);
+    border-left: 3px solid var(--steel);
+    padding: 0.9rem 1.1rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    color: var(--deepblue);
+  }
+
+  .ropeway-note strong {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
+  }
+
+  /* RUSSIAN CARDS */
+  .russian-cards { display: flex; flex-direction: column; gap: 1.2rem; margin: 1.8rem 0; }
+
+  .russian-card {
+    border: 1px solid var(--wave);
+    padding: 1.2rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .russian-card::after {
+    content: attr(data-initial);
+    font-family: 'Shippori Mincho', serif;
+    position: absolute;
+    right: 0.5rem; bottom: -0.5rem;
+    font-size: 4.5rem;
+    color: rgba(42,96,128,0.06);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .rc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--deepblue);
+    margin-bottom: 0.4rem;
+  }
+
+  .rc-route {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.8rem;
+  }
+
+  .rc-stop {
+    font-size: 0.75rem;
+    background: var(--warm);
+    color: var(--deepblue);
+    padding: 0.15rem 0.5rem;
+  }
+
+  .rc-arrow-small { color: var(--wave); font-size: 0.7rem; }
+
+  .rc-legacy {
+    font-size: 0.88rem;
+    color: #2a3a44;
+    border-left: 2px solid var(--wave);
+    padding-left: 0.8rem;
+  }
+
+  /* VOCAB */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px;
+    background: var(--wave);
+    border: 1px solid var(--wave);
+    margin: 1.8rem 0;
+  }
+
+  .vocab-item { background: var(--pale); padding: 0.9rem 1.1rem; }
+
+  .vocab-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--deepblue);
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .vocab-def { font-size: 0.78rem; color: var(--muted); }
+
+  /* CLOSING */
+  .closing {
+    background: var(--ink);
+    text-align: center;
+    padding: 4.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 10rem;
+    color: rgba(74,122,153,0.07);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .closing-content { position: relative; }
+
+  .closing h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    color: #e0eaf0;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .closing p {
+    color: #3a5a6a;
+    font-size: 0.82rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+  }
+
+  @media (max-width: 520px) {
+    .toc-item { grid-template-columns: 2rem 1fr auto; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    .geo-note { display: none; }
+    .dedication { bottom: 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-img"></div>
+  <div class="cover-kanji">神戸</div>
+  <div class="cover-content">
+    <p class="cover-label">A Visitor's Guide</p>
+    <h1 class="cover-title">Kobe</h1>
+    <p class="cover-subtitle">History, Nature & Culture</p>
+    <p class="cover-location">Kobe, Japan · Hyogo Prefecture</p>
+  </div>
+  <div class="dedication">
+    <div class="dedication-inner">
+      <div class="dedication-for">Crafted for</div>
+      <div class="dedication-names">Marina<span class="amp"> &amp; </span>Michael</div>
+      <div class="dedication-date">Kobe, Japan · March 2026</div>
+    </div>
+  </div>
+  <p class="scroll-hint">scroll</p>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <p class="toc-label">Contents</p>
+  <a class="toc-item" href="#s01">
+    <span class="toc-num">01</span>
+    <div><div class="toc-title">Kobe at a Glance</div><div class="toc-sub">The city between mountain and sea</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+  <a class="toc-item" href="#s02">
+    <span class="toc-num">02</span>
+    <div><div class="toc-title">Kobe Port</div><div class="toc-sub">Where Japan met the world</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+  <a class="toc-item" href="#s03">
+    <span class="toc-num">03</span>
+    <div><div class="toc-title">Mt. Rokkō</div><div class="toc-sub">A mountain born from collision</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+  <a class="toc-item" href="#s04">
+    <span class="toc-num">04</span>
+    <div><div class="toc-title">Nunobiki</div><div class="toc-sub">The source of Kobe Water</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+  <a class="toc-item" href="#s05">
+    <span class="toc-num">05</span>
+    <div><div class="toc-title">Russians in Kobe</div><div class="toc-sub">A forgotten chapter</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+  <a class="toc-item" href="#s06">
+    <span class="toc-num">06</span>
+    <div><div class="toc-title">Words to Know</div><div class="toc-sub">Key terms to know</div></div>
+    <span class="toc-arrow">↓</span>
+  </a>
+</nav>
+
+<!-- 01 -->
+<section id="s01">
+  <div class="section-number">01</div>
+  <h2>Kobe at a Glance</h2>
+  <p>Kobe is squeezed between Mt. Rokkō to the north and Osaka Bay to the south — a narrow ribbon of a city, rarely more than a few kilometers wide. That geography has always pushed Kobe outward: toward the ocean, toward trade, toward the world.</p>
+  <p>When Japan opened its ports in 1868, Kobe was among the first. Foreigners arrived and stayed. Their traces remain visible today — in the European street grid of the old settlement, a Chinatown, and the unexpected legacy of Russian émigrés who fled their homeland and built something new here.</p>
+</section>
+
+<!-- 02 -->
+<section id="s02">
+  <div class="section-number">02</div>
+  <h2>Kobe Port — Where Japan Met the World</h2>
+  <p>In 1858, Japan signed treaties with five Western powers — including <strong>Russia</strong> — requiring the opening of several ports to foreign trade. Kobe was one of them.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1858</div>
+      <div>Ansei Treaties signed. Russia among the five powers. Kobe's opening is guaranteed.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1868</div>
+      <div>Port opens. A planned Western-style Foreign Settlement is established — grid streets, parks, and consulates from across the world.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1881</div>
+      <div>Russian Consulate opens within the Settlement. For decades, Kobe was where Russians in western Japan came for official matters.</div>
+    </div>
+  </div>
+
+  <p>The Settlement's street grid — designed by British engineer J.W. Hart — still exists. Walking through the <em>Kyū-Kyoryūchi</em> district, you are on streets laid out over 150 years ago.</p>
+</section>
+
+<!-- 03 -->
+<section id="s03">
+  <div class="section-number">03</div>
+  <h2>Mt. Rokkō — A Mountain Born from Collision</h2>
+  <p>About one million years ago, powerful compression forces pushed the land upward — the <em>Rokkō Upheaval</em>. A range of low hills was forced skyward while Osaka Bay sank. The result: a steep mountain wall rising almost directly from the sea.</p>
+
+  <div class="geo-diagram">
+    <div class="geo-layer sky"><span>Summit — 931m</span><span class="geo-note">Rokkō's highest peak</span></div>
+    <div class="geo-layer rock"><span>Granite 花崗岩</span><span class="geo-note">Hard, but fractured by faults</span></div>
+    <div class="geo-layer fault"><span>⚡ Fault Zones</span><span class="geo-note">The mountain is broken inside</span></div>
+    <div class="geo-layer water"><span>Groundwater</span><span class="geo-note">Filtered through granite → Kobe Water</span></div>
+    <div class="geo-layer sea"><span>Osaka Bay</span><span class="geo-note">Sank as the mountain rose</span></div>
+  </div>
+
+  <p>Rokkō's granite is naturally hard — but countless faults have shattered it from within. Weathered over millennia, much of the rock has crumbled into coarse sand called <em>masa</em>. The mountain looks solid. The surface is not.</p>
+  <p>Rokkō shapes everything in Kobe: its cold winter winds stabilize fermentation in the breweries of Nada; its granite filters rainwater into the city's famously pure drinking water.</p>
+</section>
+
+<!-- 04 -->
+<section id="s04">
+  <div class="section-number">04</div>
+  <h2>Nunobiki — The Source of Kobe Water</h2>
+
+  <div class="ropeway-note">
+    <strong>🚡 If you take the Nunobiki Ropeway</strong>
+    Look down as the gondola climbs — the waterfall and reservoir visible below are Nunobiki, the subject of this chapter.
+  </div>
+
+  <p>Nunobiki is a narrow valley carved into the lower slopes of Rokkō. Its main waterfall — <em>Otaki</em>, 43 meters — has been celebrated in Japanese literature since the 10th century. The name means "pulling cloth," describing how the water spreads across the rock.</p>
+  <p>In 1900, Kobe completed a dam high in the valley — Japan's oldest surviving gravity concrete dam, still operating today as a National Important Cultural Property. It was built after a cholera epidemic in 1890 killed over a thousand people and forced the city to build a modern water supply.</p>
+
+  <div class="highlight" data-kanji="水">
+    <div class="highlight-title">Kobe Water · 神戸ウォーター</div>
+    <p>Ships calling at Kobe took on local water for the long Pacific crossing. Word spread among sailors: this water did not spoil, even crossing the equator.</p>
+    <span class="big-word">赤道を越えても腐らない</span>
+    <p>"Does not spoil even when crossing the equator."</p>
+  </div>
+
+  <p>Rokkō's granite filters both Nunobiki's water and Nada's <em>Miyamizu</em> spring water — the key ingredient in local sake. Same mountain. Same geology. Different stories.</p>
+</section>
+
+<!-- 05 -->
+<section id="s05">
+  <div class="section-number">05</div>
+  <h2>Russians in Kobe — A Forgotten Chapter</h2>
+  <p>After the 1917 Revolution, Russians who refused Soviet rule — <em>White Russians</em> (白系ロシア人) — fled their homeland. Many came to Japan, and of those, many settled in Kobe. Two of them changed what Japan eats.</p>
+
+  <div class="russian-cards">
+    <div class="russian-card" data-initial="М">
+      <div class="rc-name">Fyodor Morozov</div>
+      <div class="rc-route">
+        <span class="rc-stop">Russia</span><span class="rc-arrow-small">→</span>
+        <span class="rc-stop">Harbin</span><span class="rc-arrow-small">→</span>
+        <span class="rc-stop">Seattle</span><span class="rc-arrow-small">→</span>
+        <span class="rc-stop">Kobe 1924 ★</span>
+      </div>
+      <div class="rc-legacy">Opened a chocolate shop on Tor Road in 1926. Introduced high-quality European chocolate to Japan and in 1932 was the first to promote Valentine's Day chocolates here. The brand <strong>Morozoff</strong> still exists today.</div>
+    </div>
+
+    <div class="russian-card" data-initial="Г">
+      <div class="rc-name">Makar Goncharov</div>
+      <div class="rc-route">
+        <span class="rc-stop">Russia</span><span class="rc-arrow-small">→</span>
+        <span class="rc-stop">Seoul</span><span class="rc-arrow-small">→</span>
+        <span class="rc-stop">Kobe 1923 ★</span>
+      </div>
+      <div class="rc-legacy">Set up a chocolate workshop in Kitano in 1923 — said to have been a confectioner to the Romanov imperial court. Created Japan's first whisky bonbons. The brand <strong>Goncharoff</strong> still operates today.</div>
+    </div>
+  </div>
+
+  <p>Both settled in Kitano and Tor Road — a cosmopolitan neighborhood whose streets still carry their legacy. They arrived as refugees and left a mark Kobe still tastes.</p>
+</section>
+
+<!-- 06 -->
+<section id="s06">
+  <div class="section-number">06</div>
+  <h2>Words to Know</h2>
+  <div class="vocab-grid">
+    <div class="vocab-item">
+      <div class="vocab-word">開港 Kaikō</div>
+      <div class="vocab-def">Opening of the port, 1868</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">居留地</div>
+      <div class="vocab-def">Foreign Settlement district</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">六甲変動</div>
+      <div class="vocab-def">The geological event that built Mt. Rokkō</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">花崗岩</div>
+      <div class="vocab-def">Granite — the rock of Rokkō</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">布引 Nunobiki</div>
+      <div class="vocab-def">"Pulling cloth" — the valley below the ropeway</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">神戸ウォーター</div>
+      <div class="vocab-def">Kobe Water — famous for its purity</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">白系ロシア人</div>
+      <div class="vocab-def">White Russians — the émigrés who came to Kobe</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">北野 Kitano</div>
+      <div class="vocab-def">Hillside district of Western-style mansions</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-kanji">神戸港</div>
+  <div class="closing-content">
+    <h2>"Kobe has always been a city<br>where the world washed ashore."</h2>
+    <p>Enjoy the view · 楽しんで</p>
+  </div>
+</div>
+
+</body>
+</html>
