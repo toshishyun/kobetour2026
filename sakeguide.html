@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Guide to Sake — Nada, Kobe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --rice: #f5efe2;
+    --warm: #e8d9bc;
+    --gold: #b8903a;
+    --deepred: #6b1c1c;
+    --pale: #faf6ee;
+    --muted: #7a6a52;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--pale);
+    color: var(--ink);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 2rem;
+  }
+
+  .cover-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Sake_Barrels_at_Tsurugaoka.jpg/1280px-Sake_Barrels_at_Tsurugaoka.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+  }
+
+  .cover-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(5rem, 18vw, 12rem);
+    color: var(--gold);
+    opacity: 0.25;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.2em;
+    user-select: none;
+  }
+
+  .cover-content {
+    position: relative;
+    text-align: center;
+  }
+
+  .cover-label {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    color: var(--rice);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    color: var(--warm);
+    margin-bottom: 2.5rem;
+  }
+
+  .cover-location {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    border-top: 1px solid #3a3020;
+    padding-top: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── DEDICATION ── */
+  .dedication {
+    position: absolute;
+    bottom: 5rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
+  .dedication-inner {
+    display: inline-block;
+    border: 1px solid #3a3020;
+    padding: 1.1rem 2.4rem;
+    position: relative;
+  }
+
+  /* 四隅の装飾 */
+  .dedication-inner::before,
+  .dedication-inner::after {
+    content: '✦';
+    position: absolute;
+    color: var(--gold);
+    font-size: 0.6rem;
+    opacity: 0.7;
+  }
+  .dedication-inner::before { top: -0.45rem; left: -0.45rem; }
+  .dedication-inner::after  { bottom: -0.45rem; right: -0.45rem; }
+
+  .dedication-for {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .dedication-names {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 4vw, 1.7rem);
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .dedication-names .ampersand {
+    opacity: 0.5;
+    margin: 0 0.3em;
+  }
+
+  .dedication-date {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #4a3a2a;
+    margin-top: 0.6rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bob 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 32px;
+    background: var(--gold);
+    margin: 0.6rem auto 0;
+    opacity: 0.5;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  section + section {
+    border-top: 1px solid var(--warm);
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 4rem;
+    color: var(--warm);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: var(--deepred);
+    margin-bottom: 1.4rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    margin-top: 1.6rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #3a2e1e;
+    margin-bottom: 1rem;
+  }
+
+  /* ── INGREDIENTS BOX ── */
+  .ingredients {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--warm);
+    border: 1px solid var(--warm);
+    margin: 2rem 0;
+  }
+
+  .ingredient {
+    background: var(--pale);
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ingredient-icon {
+    font-size: 1.8rem;
+  }
+
+  .ingredient-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  .ingredient-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--warm);
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--warm);
+    min-width: 2rem;
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+
+  .step-body strong {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--deepred);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .step-body span {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--ink);
+    color: var(--rice);
+    padding: 2.2rem 2.4rem;
+    margin: 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight::before {
+    content: '麹';
+    font-family: 'Shippori Mincho', serif;
+    position: absolute;
+    right: -0.5rem;
+    bottom: -1rem;
+    font-size: 8rem;
+    color: rgba(184,144,58,0.12);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .highlight h3 {
+    color: var(--gold);
+    font-style: normal;
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .highlight p {
+    color: #c8b896;
+    font-size: 0.95rem;
+  }
+
+  .highlight .big-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    display: block;
+    margin: 1rem 0 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── DIAGRAM ── */
+  .diagram {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .diagram-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .diagram-box {
+    background: var(--rice);
+    border: 1px solid var(--warm);
+    padding: 0.6rem 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .diagram-box.active {
+    background: var(--deepred);
+    color: var(--rice);
+    border-color: var(--deepred);
+  }
+
+  .diagram-arrow {
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+
+  .diagram-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ── PARALLEL FERMENTATION ── */
+  .parallel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .parallel-box {
+    border: 1px solid var(--warm);
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .parallel-box .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .parallel-box strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--deepred);
+    margin-bottom: 0.3rem;
+  }
+  .parallel-box span { font-size: 0.82rem; color: var(--muted); }
+
+  .parallel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .parallel-result {
+    grid-column: 1 / -1;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  /* ── NADA REASONS ── */
+  .reason-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .reason-card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .reason-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--warm);
+    line-height: 1;
+    text-align: right;
+  }
+
+  .reason-card h3 {
+    margin-top: 0;
+    font-style: normal;
+    font-size: 1.05rem;
+    color: var(--deepred);
+  }
+
+  .reason-card p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  /* ── VOCAB ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--warm);
+    border: 1px solid var(--warm);
+    margin: 2rem 0;
+  }
+
+  .vocab-item {
+    background: var(--pale);
+    padding: 1rem 1.2rem;
+  }
+
+  .vocab-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--deepred);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .vocab-def {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: var(--ink);
+    text-align: center;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-kanji {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 10rem;
+    color: rgba(184,144,58,0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .closing-content { position: relative; }
+
+  .closing h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--rice);
+    margin-bottom: 1.5rem;
+  }
+
+  .closing p {
+    color: #9a8a6a;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+  }
+
+  .formula {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 2.2;
+  }
+
+  /* ── PHOTO STRIP ── */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .photo-strip div {
+    background-size: cover;
+    background-position: center;
+    filter: sepia(0.3) brightness(0.85);
+    transition: filter 0.3s;
+  }
+
+  .photo-strip div:hover {
+    filter: sepia(0) brightness(1);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .ingredients { grid-template-columns: 1fr; }
+    .parallel { grid-template-columns: 1fr; }
+    .parallel-result { grid-column: 1; }
+    .photo-strip { grid-template-columns: 1fr; height: auto; }
+    .photo-strip div { height: 140px; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── COVER ── -->
+<div class="cover">
+  <div class="cover-img"></div>
+  <div class="cover-kanji">灘の酒</div>
+  <div class="cover-content">
+    <p class="cover-label">A Visitor's Guide</p>
+    <h1 class="cover-title">The Art of Sake</h1>
+    <p class="cover-subtitle">From Rice to Ritual</p>
+    <p class="cover-location">Nada District · Kobe, Japan</p>
+  </div>
+
+  <div class="dedication">
+    <div class="dedication-inner">
+      <div class="dedication-for">Crafted for</div>
+      <div class="dedication-names">
+        Marina<span class="ampersand"> &amp; </span>Michael
+      </div>
+      <div class="dedication-date">Nada, Kobe · March 2026</div>
+    </div>
+  </div>
+
+  <p class="scroll-hint">scroll</p>
+</div>
+
+<!-- ── SECTION 1: WHAT IS SAKE ── -->
+<section>
+  <div class="section-number">01</div>
+  <h2>What is Sake?</h2>
+  <p>Sake is Japan's most celebrated traditional drink — a fermented beverage born from just four simple ingredients, yet requiring extraordinary craft to produce.</p>
+
+  <div class="ingredients">
+    <div class="ingredient">
+      <span class="ingredient-icon">🌾</span>
+      <div>
+        <div class="ingredient-name">Rice</div>
+        <div class="ingredient-note">Special varieties, highly polished</div>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-icon">💧</span>
+      <div>
+        <div class="ingredient-name">Water</div>
+        <div class="ingredient-note">Mineral balance is critical</div>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-icon">🍄</span>
+      <div>
+        <div class="ingredient-name">Koji Mold</div>
+        <div class="ingredient-note"><em>Aspergillus oryzae</em></div>
+      </div>
+    </div>
+    <div class="ingredient">
+      <span class="ingredient-icon">🧫</span>
+      <div>
+        <div class="ingredient-name">Yeast</div>
+        <div class="ingredient-note">Converts sugar to alcohol</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Unlike wine, sake cannot be made simply by fermenting fruit. Rice contains <strong>starch</strong>, not sugar — and yeast can only feed on sugar. This requires an extra step that makes sake brewing more complex and fascinating than almost any other fermented drink in the world.</p>
+</section>
+
+<!-- ── SECTION 2: BREWING STEPS ── -->
+<section>
+  <div class="section-number">02</div>
+  <h2>How Sake is Brewed</h2>
+  <p>The full brewing process takes weeks, moving through eight essential stages. During your visit, you may see several of these in action.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Rice Polishing</strong>
+        <span>The outer layers of each grain are milled away. More polishing = more delicate flavor.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Washing & Steaming</strong>
+        <span>Rice is soaked, then steamed — not boiled. This matters for texture and starch structure.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Koji Making</strong>
+        <span>Mold spores are introduced to steamed rice and cultivated in a warm room for 48 hours.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Fermentation (Moromi)</strong>
+        <span>Koji rice, steamed rice, water, and yeast are combined in a large tank. This is the heart of sake.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>Pressing</strong>
+        <span>The fermented mash is pressed to separate clear sake from solids.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <strong>Filtering</strong>
+        <span>Activated charcoal removes color and off-flavors (some sake skips this for a fuller character).</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <strong>Pasteurization</strong>
+        <span>Gentle heating stops microbial activity. Unpasteurized sake — called <em>namazake</em> — is rarer and fresher.</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <strong>Aging & Bottling</strong>
+        <span>Most sake rests for 6–12 months before release. Some is aged for years.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: KOJI ── -->
+<section>
+  <div class="section-number">03</div>
+  <h2>The Secret Ingredient: Koji</h2>
+  <p>There is a central question in sake brewing:</p>
+  <p><em>If rice contains no sugar, how does it become alcohol?</em></p>
+  <p>The answer is koji.</p>
+
+  <div class="highlight">
+    <h3>What is Koji?</h3>
+    <p>Koji is steamed rice that has been inoculated with <em>Aspergillus oryzae</em> — a mold native to East Asia. As the mold grows, it secretes powerful enzymes.</p>
+    <span class="big-word">Saccharification</span>
+    <p>These enzymes break down rice starch into fermentable sugars. Without koji, there is no sake. Koji is also the foundation of miso, soy sauce, mirin, and many other Japanese foods.</p>
+  </div>
+
+  <p>The koji room (<em>muro</em>) is typically the most carefully controlled space in any brewery — warm, humid, and off-limits to visitors at most breweries. The 48 hours of koji cultivation require constant attention and hands-on care by the brewer.</p>
+</section>
+
+<!-- ── SECTION 4: PARALLEL FERMENTATION ── -->
+<section>
+  <div class="section-number">04</div>
+  <h2>Why Sake is Unique</h2>
+  <p>Most alcoholic drinks use a simple process:</p>
+
+  <div class="diagram" style="margin-bottom:2rem;">
+    <div class="diagram-row">
+      <div class="diagram-box">Grapes (sugar)</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-box active">Alcohol</div>
+    </div>
+    <div class="diagram-label">Wine — one step</div>
+  </div>
+
+  <p>Sake requires two separate conversions — and uniquely, they happen <strong>simultaneously in the same tank</strong>:</p>
+
+  <div class="parallel">
+    <div class="parallel-box">
+      <div class="icon">🍄</div>
+      <strong>Koji enzymes</strong>
+      <span>Starch → Sugar<br>(saccharification)</span>
+    </div>
+    <div class="parallel-box">
+      <div class="icon">🧫</div>
+      <strong>Yeast</strong>
+      <span>Sugar → Alcohol<br>(fermentation)</span>
+    </div>
+    <div class="parallel-result">
+      ✦ Multiple Parallel Fermentation ✦<br>
+      <span style="font-size:0.85rem; opacity:0.7; font-family:'Lato',sans-serif; font-style:normal;">Unique to sake — this is why it can reach 18–20% alcohol naturally</span>
+    </div>
+  </div>
+
+  <p>This elegant biochemical dance, happening simultaneously, makes sake the most alcoholically complex naturally fermented beverage ever devised by humans.</p>
+</section>
+
+<!-- ── SECTION 5: NADA ── -->
+<section>
+  <div class="section-number">05</div>
+  <h2>Why Nada is Special</h2>
+  <p>Nada has been the center of Japan's sake world for over three centuries. Three factors make it irreplaceable.</p>
+
+  <div class="reason-cards">
+    <div class="reason-card">
+      <div class="reason-num">1</div>
+      <div>
+        <h3>Miyamizu Water</h3>
+        <p><em>Miyamizu</em> — "shrine water" — is drawn from natural springs beneath the Nada hills. It is rich in potassium and phosphorus (vital nutrients for yeast) yet remarkably low in iron, which would otherwise dull the flavor. The result: a clean, vigorous fermentation and a sake famous for its crisp, dry character (<em>otokozake</em> — "man's sake").</p>
+      </div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">2</div>
+      <div>
+        <h3>The Rokkō Wind</h3>
+        <p>Cold, dry winds descend from Mt. Rokkō each winter. Sake is brewed in the cold months, and these winds help maintain the low temperatures that allow slow, stable fermentation — the key to complex, refined flavor.</p>
+      </div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">3</div>
+      <div>
+        <h3>Access to Edo (Tokyo)</h3>
+        <p>In the Edo period, Nada's breweries loaded barrels onto ships in Kobe Harbor and sailed east to supply the massive capital city. The long ocean voyage — months at sea — actually improved the sake. Nada grew into Japan's largest sake-producing region as a result.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 6: VOCAB ── -->
+<section>
+  <div class="section-number">06</div>
+  <h2>Words to Know</h2>
+  <p>You may encounter these terms at the brewery today.</p>
+
+  <div class="vocab-grid">
+    <div class="vocab-item">
+      <div class="vocab-word">Koji 麹</div>
+      <div class="vocab-def">Mold-cultivated rice; the enzyme source</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Moromi 醪</div>
+      <div class="vocab-def">The fermenting mash in the tank</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Miyamizu 宮水</div>
+      <div class="vocab-def">Nada's famous spring water</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Junmai 純米</div>
+      <div class="vocab-def">Pure rice sake (no added alcohol)</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Ginjo 吟醸</div>
+      <div class="vocab-def">Highly polished rice; fruity & floral</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Daiginjo 大吟醸</div>
+      <div class="vocab-def">Premium; rice polished to 50% or less</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Namazake 生酒</div>
+      <div class="vocab-def">Unpasteurized sake; fresh & lively</div>
+    </div>
+    <div class="vocab-item">
+      <div class="vocab-word">Kanpai! 乾杯</div>
+      <div class="vocab-def">Cheers! (literally: "dry the cup")</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLOSING ── -->
+<div class="closing">
+  <div class="closing-kanji">乾杯</div>
+  <div class="closing-content">
+    <h2>The Essence of Sake</h2>
+    <p>Everything you taste today comes down to this:</p>
+    <div class="formula">
+      Rice + Water + Koji + Yeast + Time<br>
+      <span style="color: #4a3a2a; font-size: 1.2rem;">+</span><br>
+      Miyamizu · The Cold Wind · Three Centuries of Craft<br>
+      <span style="color: #4a3a2a; font-size: 1.5rem; display:block; margin:0.8rem 0;">＝</span>
+      <span style="font-size:1.3rem;">Great Sake from Nada</span>
+    </div>
+    <p style="margin-top:2.5rem; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; color:#4a3a2a;">Enjoy the tasting · 乾杯</p>
+  </div>
+</div>
+
+</body>
+</html>
